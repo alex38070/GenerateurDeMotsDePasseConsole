@@ -27,7 +27,8 @@ public class Program
     {
         do
         {
-            GenerateurMdp.AgglomererEtMelangerEtAfficherListes();
+            GenerateurMdp generateurMdp = new GenerateurMdp();
+            generateurMdp.Lancer();
             Console.Write("\r\nAppuyer sur 1 pour générer un nouveau mot de passe : ");
         } while (Console.ReadLine() == "1");
     }

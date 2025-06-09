@@ -1,82 +1,60 @@
 ﻿namespace GenerateurDeMotsDePasseConsole;
+
 internal class GenerateurMdp
 {
-    public static int _nombreDeCaracteres = 8;
+    private static int _nombreDeCaracteres = 8;
 
-    public static List<string> LettresMiniscule = new List<string>
+    private static List<string> MotDePasseAMixer = new List<string>();
+
+    Data data = new();
+    public void Lancer()
     {
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
-    };
-
-    public static List<string> Nombres = new List<string>
-    {
-       "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
-    };
-
-    public static List<string> LettresAleatoire()
-    {
-        List<string> lettresAleatoires = new List<string>();
-
-        for (int i = 0; i < _nombreDeCaracteres / 2; i++)
-        {
-            int lettreAleatoire = Random.Shared.Next(0, LettresMiniscule.Count());
-            lettresAleatoires.Add(LettresMiniscule[lettreAleatoire]);
-        }
-        return lettresAleatoires;
+        GenerateurDeMotDePasse(MotDePasseAMixer);
     }
 
-    public static List<string> NombresAleatoire()
+    private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
-        List<string> nombresAleatoires = new List<string>();
+        MotDePasseAMixer.Clear();
+        //UtilitairesConsole.DemanderNombre(); // saisie utilisateur
+        Console.WriteLine(UtilitairesConsole.DemanderNombre());
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole));
+        MixerMdp(MotDePasseAMixer);
 
-        for (int i = 0; i < _nombreDeCaracteres / 2; i++)
-        {
-            int nombreAleatoire = Random.Shared.Next(0, Nombres.Count());
-
-            nombresAleatoires.Add(Nombres[nombreAleatoire]);
-        }
-
-        return nombresAleatoires;
     }
 
-    public static void AgglomererEtMelangerEtAfficherListes()
+    private List<string> AgglomererEtAfficherListes(List<string> MotDePasseMixer, List<string> ListAleatoire)
     {
-        List<string> MotDePasseMixer = new List<string>();
-
-        foreach (string lettre in LettresAleatoire())
+        foreach (string Element in ListAleatoire)
         {
-            MotDePasseMixer.Add(lettre);
+            MotDePasseMixer.Add(Element);
         }
+        return MotDePasseMixer;
+    }
 
-        foreach (string nombre in NombresAleatoire())
-        {
-            MotDePasseMixer.Add(nombre);
-        }
-
-        Console.WriteLine("\r\nAvant mélange");
-        foreach (string CaractereMdp in MotDePasseMixer)
-        {
-            Console.Write(CaractereMdp);
-        }
-
-        // mixer pour de vrai avant d'afficher
-        IOrderedEnumerable<string> toto = MotDePasseMixer.OrderBy(item => Random.Shared.Next());
+    private void MixerMdp(List<string> MotDePasseAMixer)
+    {
+        IOrderedEnumerable<string> toto = MotDePasseAMixer.OrderBy(item => Random.Shared.Next());
 
         Console.WriteLine("\r\nAprès mélange");
         foreach (string CaractereMdp in toto)
         {
             Console.Write(CaractereMdp);
         }
-
     }
 
-    //public static void AfficherMdp(List<string> MotDePasseMixer)
-    //{
-    //    foreach (string CaractereMdp in MotDePasseMixer)
-    //    {
-    //        Console.Write(CaractereMdp);
-    //    }
-    //}
+    private List<string> ElementsAleatoires(List<string> ListAleatoire)
+    {
+        List<string> ElementsAleatoires = new List<string>();
+
+        for (int i = 0; i < UtilitairesConsole.DemanderNombre(); i++)
+        {
+            int lettreAleatoire = Random.Shared.Next(0, ListAleatoire.Count());
+            ElementsAleatoires.Add(ListAleatoire[lettreAleatoire]);
+        }
+        return ElementsAleatoires;
+    }
 
 }

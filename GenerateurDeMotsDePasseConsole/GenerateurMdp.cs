@@ -7,6 +7,7 @@ internal class GenerateurMdp
     private static List<string> MotDePasseAMixer = new List<string>();
 
     Data data = new();
+
     public void Lancer()
     {
         GenerateurDeMotDePasse(MotDePasseAMixer);
@@ -15,12 +16,12 @@ internal class GenerateurMdp
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
         MotDePasseAMixer.Clear();
-        //UtilitairesConsole.DemanderNombre(); // saisie utilisateur
-        Console.WriteLine(UtilitairesConsole.DemanderNombre());
-        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule));
-        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule));
-        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres));
-        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole));
+        int nombre = UtilitairesConsole.MixerChoixUtilisateur();
+        Console.WriteLine(nombre);
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, nombre));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, nombre));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, nombre));
+        AgglomererEtAfficherListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, nombre));
         MixerMdp(MotDePasseAMixer);
 
     }
@@ -45,11 +46,11 @@ internal class GenerateurMdp
         }
     }
 
-    private List<string> ElementsAleatoires(List<string> ListAleatoire)
+    private List<string> ElementsAleatoires(List<string> ListAleatoire, int nombre)
     {
         List<string> ElementsAleatoires = new List<string>();
 
-        for (int i = 0; i < UtilitairesConsole.DemanderNombre(); i++)
+        for (int i = 0; i < nombre; i++)
         {
             int lettreAleatoire = Random.Shared.Next(0, ListAleatoire.Count());
             ElementsAleatoires.Add(ListAleatoire[lettreAleatoire]);

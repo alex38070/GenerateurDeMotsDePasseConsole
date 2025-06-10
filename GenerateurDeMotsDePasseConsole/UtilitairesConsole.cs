@@ -16,19 +16,4 @@ public class UtilitairesConsole
         }
     }
 
-    public static int MixerChoixUtilisateur() // Mixer Nombre utiisateur pour 4 type
-    {
-        int resultat = DemanderNombre();
-        int modulo = (resultat % 4);
-        if (modulo == 0)
-            return resultat / 4;
-
-        if (modulo == 1)
-            return (resultat / 4) + 1;
-
-        if (modulo == 2)
-            return (resultat / 4) + 2;
-
-        return 0;
-    }
 }

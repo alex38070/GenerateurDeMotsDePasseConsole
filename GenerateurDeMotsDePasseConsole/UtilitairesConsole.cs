@@ -7,13 +7,19 @@ public class UtilitairesConsole
     {
         while (true)
         {
-            Console.WriteLine("Veuillez saisir un nombre pour la longueur du mot de passe");
-            string saisie = Console.ReadLine();
-            bool estChiffre = (int.TryParse(saisie, out int nombre));
+            Console.WriteLine("Veuillez saisir un nombre entre 4 et 40 de longueur de mot de passe");
+            string saisie = Console.ReadLine() ?? string.Empty;
 
-            if (estChiffre)
-                return nombre;
+            if ((int.TryParse(saisie, out int nombre)))
+                if ((nombre >= 4 && nombre <= 40))
+                    return nombre;
         }
+    }
+
+    public static int NombreAleatoire()
+    {
+        int nombreModuloAleatoire = Random.Shared.Next(1, 4);
+        return nombreModuloAleatoire;
     }
 
 }

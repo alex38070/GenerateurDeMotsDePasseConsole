@@ -16,12 +16,12 @@ internal class GenerateurMdp
         MotDePasseAMixer.Clear();
         int nombre = UtilitairesConsole.DemanderNombre(); // Choix nombre utilisateur
 
-        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, MixerChoixUtilisateur(nombre)));
-        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, MixerChoixUtilisateur(nombre)));
-        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, MixerChoixUtilisateur(nombre)));
-        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, MixerChoixUtilisateur(nombre)));
+        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RepartirChoixUtilisateur(nombre)));
+        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, RepartirChoixUtilisateur(nombre)));
+        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RepartirChoixUtilisateur(nombre)));
+        IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RepartirChoixUtilisateur(nombre)));
 
-        int nombreAleatoire = UtilitairesConsole.NombreAleatoire();
+        int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4);
         switch (nombreAleatoire)
         {
             case 1:
@@ -44,7 +44,7 @@ internal class GenerateurMdp
         MixerMdp(MotDePasseAMixer);
     }
 
-    private int MixerChoixUtilisateur(int nombre)
+    private int RepartirChoixUtilisateur(int nombre)
     {
         int resultat = nombre / 4;
         return resultat;
@@ -56,13 +56,13 @@ internal class GenerateurMdp
         return modulo;
     }
 
-    private List<string> ElementsAleatoires(List<string> ListAleatoire, int nombre)
+    private List<string> ElementsAleatoires(List<string> ListAleatoire, int nombreMax)
     {
         List<string> ElementsAleatoires = new List<string>();
 
-        for (int i = 0; i < nombre; i++)
+        for (int i = 0; i < nombreMax; i++)
         {
-            int lettreAleatoire = Random.Shared.Next(0, ListAleatoire.Count());
+            int lettreAleatoire = UtilitairesConsole.NombreAleatoire(0, ListAleatoire.Count());
             ElementsAleatoires.Add(ListAleatoire[lettreAleatoire]);
         }
         return ElementsAleatoires;

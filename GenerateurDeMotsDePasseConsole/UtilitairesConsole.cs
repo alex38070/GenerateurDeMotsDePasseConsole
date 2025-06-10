@@ -16,9 +16,9 @@ public class UtilitairesConsole
         }
     }
 
-    public static int NombreAleatoire()
+    public static int NombreAleatoire(int min, int max) // Nombre aleatoire entre min et max
     {
-        int nombreModuloAleatoire = Random.Shared.Next(1, 4);
+        int nombreModuloAleatoire = Random.Shared.Next(min, max);
         return nombreModuloAleatoire;
     }
 

@@ -7,7 +7,7 @@ public class UtilitairesConsole
     {
         while (true)
         {
-            Console.WriteLine("Veuillez saisir un nombre entre 4 et 40 de longueur de mot de passe");
+            Console.Write("Veuillez saisir un nombre entre 4 et 40 de longueur de mot de passe : ");
             string saisie = Console.ReadLine() ?? string.Empty;
 
             if ((int.TryParse(saisie, out int nombre)))

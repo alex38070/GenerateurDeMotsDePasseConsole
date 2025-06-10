@@ -22,7 +22,6 @@ internal class GenerateurMdp
         IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, MixerChoixUtilisateur(nombre)));
 
         int nombreAleatoire = UtilitairesConsole.NombreAleatoire();
-
         switch (nombreAleatoire)
         {
             case 1:
@@ -41,6 +40,7 @@ internal class GenerateurMdp
                 IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, Modulo(nombre)));
                 break;
         }
+        Console.WriteLine();
         MixerMdp(MotDePasseAMixer);
     }
 

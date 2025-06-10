@@ -23,4 +23,5 @@ internal class Data
     {
        "/", "!", "?"
     };
+
 }

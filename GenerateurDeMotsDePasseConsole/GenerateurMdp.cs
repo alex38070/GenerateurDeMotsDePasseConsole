@@ -16,7 +16,7 @@ internal class GenerateurMdp
         int incrementDivision = 0;
         int saisieNombre = UtilitairesConsole.DemanderNombre(); // Choix nombre utilisateur
 
-        ChoixTypes(saisieNombre, incrementDivision, MotDePasseAMixer);
+        ChoixTypesUtilisateur(saisieNombre, incrementDivision, MotDePasseAMixer);
 
         int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4);
 
@@ -25,7 +25,7 @@ internal class GenerateurMdp
         MixerMdp(MotDePasseAMixer);
     }
 
-    private void ChoixTypes(int saisieNombre, int incrementDivision, List<string> MotDePasseAMixer)
+    private void ChoixTypesUtilisateur(int saisieNombre, int incrementDivision, List<string> MotDePasseAMixer)
     {
         bool ajoutMinuscule = false;
         bool ajoutMajuscule = false;
@@ -124,9 +124,9 @@ internal class GenerateurMdp
 
     private void MixerMdp(List<string> MotDePasseAMixer)
     {
-        IOrderedEnumerable<string> toto = MotDePasseAMixer.OrderBy(item => Random.Shared.Next());
+        IOrderedEnumerable<string> motDePasseMelanger = MotDePasseAMixer.OrderBy(item => Random.Shared.Next());
 
-        foreach (string CaractereMdp in toto)
+        foreach (string CaractereMdp in motDePasseMelanger)
         {
             Console.Write(CaractereMdp);
         }

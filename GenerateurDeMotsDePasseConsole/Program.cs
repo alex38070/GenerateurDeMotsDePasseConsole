@@ -17,8 +17,6 @@
 *      
  * 
  */
-
-
 namespace GenerateurDeMotsDePasseConsole;
 
 public class Program

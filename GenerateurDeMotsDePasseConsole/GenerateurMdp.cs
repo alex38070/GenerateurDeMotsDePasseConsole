@@ -25,7 +25,7 @@ internal class GenerateurMdp
         MixerMdp(MotDePasseAMixer);
     }
 
-    public void ChoixTypes(int saisieNombre, int incrementDivision, List<string> MotDePasseAMixer)
+    private void ChoixTypes(int saisieNombre, int incrementDivision, List<string> MotDePasseAMixer)
     {
         bool ajoutMinuscule = false;
         bool ajoutMajuscule = false;
@@ -35,7 +35,7 @@ internal class GenerateurMdp
         Console.Write("Veuillez 1 si vous voulez des Minuscule : ");
         if ((Console.ReadLine() == "1"))
         {
-            ajoutMinuscule |= true;
+            ajoutMinuscule = true;
             incrementDivision++;
         }
         Console.Write("Veuillez 1 si vous voulez des Majuscule : ");
@@ -53,7 +53,7 @@ internal class GenerateurMdp
         Console.Write("Veuillez 1 si vous voulez des Symbole : ");
         if ((Console.ReadLine() == "1"))
         {
-            ajoutSymbole |= true;
+            ajoutSymbole = true;
             incrementDivision++;
         }
 
@@ -67,7 +67,7 @@ internal class GenerateurMdp
             IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RepartirChoixUtilisateur(saisieNombre, incrementDivision)));
     }
 
-    public void SwitchNombreAleatoire(int nombreAleatoire, int saisieNombre)
+    private void SwitchNombreAleatoire(int nombreAleatoire, int saisieNombre)
     {
         switch (nombreAleatoire)
         {

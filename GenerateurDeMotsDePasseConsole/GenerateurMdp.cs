@@ -10,7 +10,7 @@ internal class GenerateurMdp
     bool ajoutMajuscule = false;
     bool ajoutNombre = false;
     bool ajoutSymbole = false;
-    string choixUtilisateur = "";
+    string choixUtilisateur = string.Empty;
 
     public void Lancer()
     {
@@ -62,6 +62,7 @@ internal class GenerateurMdp
         //Environment.Exit(0);
         Console.WriteLine("Merci au revoir");
     }
+
     private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)  // interdire jamais o parametre
     {
         bool choixVide = true;
@@ -136,23 +137,6 @@ internal class GenerateurMdp
                 break;
         }
     }
-
-    //private int RepartirChoixUtilisateur(int nombre, int nombreDeChoixUtilisateur) // condition ternere en varianle
-    //{
-    //    int resultat = 1;
-    //    if (nombreDeChoixUtilisateur != 0)
-    //    {
-    //        resultat = nombre / nombreDeChoixUtilisateur;
-    //        return resultat;
-    //    }
-    //    return resultat;
-    //}
-
-    //private int RetournerResteModulo(int nombre, int nombreDeChoixUtilisateur) // variable
-    //{
-    //    int modulo = (nombre % nombreDeChoixUtilisateur);
-    //    return modulo;
-    //}
 
     private List<string> ElementsAleatoires(List<string> ListAleatoire, int nombreMax)
     {

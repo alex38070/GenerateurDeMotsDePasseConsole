@@ -2,6 +2,8 @@
 
 internal class Data
 {
+    List<string> data = new();
+
     internal List<string> LettreMinuscule = new List<string>
     {
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -23,5 +25,4 @@ internal class Data
     {
        "/", "!", "?"
     };
-
 }

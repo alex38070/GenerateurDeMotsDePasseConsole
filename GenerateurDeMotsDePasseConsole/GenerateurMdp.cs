@@ -62,7 +62,7 @@ internal class GenerateurMdp
         //Environment.Exit(0);
         Console.WriteLine("Merci au revoir");
     }
-    private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)
+    private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)  // interdire jamais o parametre
     {
         bool choixVide = true;
         do
@@ -105,51 +105,54 @@ internal class GenerateurMdp
 
     public void MixerList(int nombreAleatoire, int saisieNombre)
     {
+        int modulo = (saisieNombre % nombreDeChoixUtilisateur);
+        int resultat = (nombreDeChoixUtilisateur != 0) ? (saisieNombre / nombreDeChoixUtilisateur) : 1;
+
         if (ajoutMinuscule)
-            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
+            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, resultat));
         if (ajoutMajuscule)
-            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
+            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, resultat));
         if (ajoutNombre)
-            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
+            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, resultat));
         if (ajoutSymbole)
-            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
+            IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, resultat));
 
         switch (nombreAleatoire)
         {
             case 1:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, modulo));
                 break;
 
             case 2:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, modulo));
                 break;
 
             case 3:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, modulo));
                 break;
 
             case 4:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, modulo));
                 break;
         }
     }
 
-    private int RepartirChoixUtilisateur(int nombre, int nombreDeChoixUtilisateur)
-    {
-        int resultat = 1;
-        if (nombreDeChoixUtilisateur != 0)
-        {
-            resultat = nombre / nombreDeChoixUtilisateur;
-            return resultat;
-        }
-        return resultat;
-    }
+    //private int RepartirChoixUtilisateur(int nombre, int nombreDeChoixUtilisateur) // condition ternere en varianle
+    //{
+    //    int resultat = 1;
+    //    if (nombreDeChoixUtilisateur != 0)
+    //    {
+    //        resultat = nombre / nombreDeChoixUtilisateur;
+    //        return resultat;
+    //    }
+    //    return resultat;
+    //}
 
-    private int RetournerResteModulo(int nombre, int nombreDeChoixUtilisateur)
-    {
-        int modulo = (nombre % nombreDeChoixUtilisateur);
-        return modulo;
-    }
+    //private int RetournerResteModulo(int nombre, int nombreDeChoixUtilisateur) // variable
+    //{
+    //    int modulo = (nombre % nombreDeChoixUtilisateur);
+    //    return modulo;
+    //}
 
     private List<string> ElementsAleatoires(List<string> ListAleatoire, int nombreMax)
     {

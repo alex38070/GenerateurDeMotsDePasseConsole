@@ -5,6 +5,12 @@ internal class GenerateurMdp
     private List<string> MotDePasseAMixer = new List<string>();
     private Data data = new();
 
+    bool ajoutMinuscule = false;
+    bool ajoutMajuscule = false;
+    bool ajoutNombre = false;
+    bool ajoutSymbole = false;
+    int nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
+
     public void Lancer()
     {
         GenerateurDeMotDePasse(MotDePasseAMixer);
@@ -12,51 +18,79 @@ internal class GenerateurMdp
 
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
-        MotDePasseAMixer.Clear();
-        int incrementDivision = 0;
-        int saisieNombre = UtilitairesConsole.DemanderNombre(); // Choix nombre utilisateur
+        do
+        {
+            MotDePasseAMixer.Clear();
 
-        ChoixTypesUtilisateur(saisieNombre, incrementDivision, MotDePasseAMixer);
+            int saisieNombre = UtilitairesConsole.DemanderNombre(4, 40); // Choix nombre utilisateur
+            int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4); // Choix nombre aleatoire
 
-        int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4);
+            ChoixTypesUtilisateur(saisieNombre, MotDePasseAMixer, nombreAleatoire);
 
-        SwitchTypeAleatoire(nombreAleatoire, saisieNombre);
-        Console.WriteLine();
-        MelangerMdp(MotDePasseAMixer);
+            MixerList(nombreAleatoire, saisieNombre);
+
+            MelangerMdp(MotDePasseAMixer);
+
+            bool estVraie = true;
+            MotDePasseAMixer.Clear();
+
+            while (estVraie)
+            {
+                MotDePasseAMixer.Clear();
+                MixerList(nombreAleatoire, saisieNombre);
+                MelangerMdp(MotDePasseAMixer);
+                Console.Write("\r\nAppuyer sur 1 pour donner nouveu mot de passe réinitialiser : ");
+                string choixUtilisateur = Console.ReadLine(); // Choix nombre utilisateur
+                estVraie = (choixUtilisateur == "1");
+
+                Console.WriteLine();
+
+                if (choixUtilisateur != "1")
+                    estVraie = false;
+            }
+
+        } while (true);
     }
 
-    private void ChoixTypesUtilisateur(int saisieNombre, int nombreDeChoixUtilisateur, List<string> MotDePasseAMixer)
+    private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)
     {
-        bool ajoutMinuscule = false;
-        bool ajoutMajuscule = false;
-        bool ajoutNombre = false;
-        bool ajoutSymbole = false;
+        bool choixVide = false;
+        do
+        {
+            Console.Write("Veuillez o/n si vous voulez des Minuscule : ");
+            if ((Console.ReadLine() == "o"))
+            {
+                ajoutMinuscule = true;
+                nombreDeChoixUtilisateur++;
+            }
+            Console.Write("Veuillez o/n si vous voulez des Majuscule : ");
+            if ((Console.ReadLine() == "o"))
+            {
+                ajoutMajuscule = true;
+                nombreDeChoixUtilisateur++;
+            }
+            Console.Write("Veuillez o/n si vous voulez des Nombre : ");
+            if ((Console.ReadLine() == "o"))
+            {
+                ajoutNombre = true;
+                nombreDeChoixUtilisateur++;
+            }
+            Console.Write("Veuillez o/n si vous voulez des Symbole : ");
+            if ((Console.ReadLine() == "o"))
+            {
+                ajoutSymbole = true;
+                nombreDeChoixUtilisateur++;
+            }
+            if (nombreDeChoixUtilisateur == 0)
+                choixVide = true;
+            Console.WriteLine("\r\nVeuillez faire au moins un choix : \r\n");
 
-        Console.Write("Veuillez 1 si vous voulez des Minuscule : ");
-        if ((Console.ReadLine() == "1"))
-        {
-            ajoutMinuscule = true;
-            nombreDeChoixUtilisateur++;
-        }
-        Console.Write("Veuillez 1 si vous voulez des Majuscule : ");
-        if ((Console.ReadLine() == "1"))
-        {
-            ajoutMajuscule = true;
-            nombreDeChoixUtilisateur++;
-        }
-        Console.Write("Veuillez 1 si vous voulez des Nombre : ");
-        if ((Console.ReadLine() == "1"))
-        {
-            ajoutNombre = true;
-            nombreDeChoixUtilisateur++;
-        }
-        Console.Write("Veuillez 1 si vous voulez des Symbole : ");
-        if ((Console.ReadLine() == "1"))
-        {
-            ajoutSymbole = true;
-            nombreDeChoixUtilisateur++;
-        }
+        } while (choixVide);
 
+    }
+
+    public void MixerList(int nombreAleatoire, int saisieNombre)
+    {
         if (ajoutMinuscule)
             IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
         if (ajoutMajuscule)
@@ -65,39 +99,42 @@ internal class GenerateurMdp
             IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
         if (ajoutSymbole)
             IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RepartirChoixUtilisateur(saisieNombre, nombreDeChoixUtilisateur)));
-    }
 
-    private void SwitchTypeAleatoire(int nombreAleatoire, int saisieNombre)
-    {
         switch (nombreAleatoire)
         {
             case 1:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RetournerResteModulo(saisieNombre, 5)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMinuscule, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
                 break;
 
             case 2:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, RetournerResteModulo(saisieNombre, 5)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.LettreMajuscule, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
                 break;
 
             case 3:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RetournerResteModulo(saisieNombre, 5)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Nombres, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
                 break;
 
             case 4:
-                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RetournerResteModulo(saisieNombre, 5)));
+                IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
                 break;
         }
+
     }
 
     private int RepartirChoixUtilisateur(int nombre, int nombreDeChoixUtilisateur)
     {
-        int resultat = nombre / nombreDeChoixUtilisateur;
+        int resultat = 1;
+        if (nombreDeChoixUtilisateur != 0)
+        {
+            resultat = nombre / nombreDeChoixUtilisateur;
+            return resultat;
+        }
         return resultat;
     }
 
-    private int RetournerResteModulo(int nombre, int incrementDivision)
+    private int RetournerResteModulo(int nombre, int nombreDeChoixUtilisateur)
     {
-        int modulo = (nombre % incrementDivision);
+        int modulo = (nombre % nombreDeChoixUtilisateur);
         return modulo;
     }
 

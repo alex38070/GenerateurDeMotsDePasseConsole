@@ -19,8 +19,13 @@ internal class GenerateurMdp
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
         bool estVraie = false;
+        bool nouvelleSaisie = false;
+        string choixUtilisateur;
+
         do
         {
+            MotDePasseAMixer.Clear();
+            nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
             int saisieNombre = UtilitairesConsole.DemanderNombre(4, 40); // Choix nombre utilisateur
             int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4); // Choix nombre aleatoire
 
@@ -28,37 +33,34 @@ internal class GenerateurMdp
 
             MixerList(nombreAleatoire, saisieNombre);
 
+            Console.WriteLine();
             MelangerMdp(MotDePasseAMixer);
 
             do
             {
+                Console.WriteLine();
                 Console.WriteLine("\r\nSouhaitez-vous générer un nouveau mot de passe ?\r\n");
                 Console.WriteLine("1. Oui, avec les mêmes critères");
                 Console.WriteLine("2. Oui, avec de nouveaux critères");
-                Console.WriteLine("3. Autre. Non, quitter l'application");
+                Console.WriteLine("3. Non, quitter l'application");
 
                 Console.Write("\r\nChoix : ");
-                string choixUtilisateur = Console.ReadLine() ?? string.Empty; // Choix nombre utilisateur
 
-                estVraie = (choixUtilisateur == "1");
+                choixUtilisateur = UtilitairesConsole.DemanderString();
 
                 if (choixUtilisateur == "1")
                 {
                     MotDePasseAMixer.Clear();
                     MixerList(nombreAleatoire, saisieNombre);
                     MelangerMdp(MotDePasseAMixer);
-                    estVraie = true;
-
                 }
 
-                if (choixUtilisateur == "2")
-                    estVraie = false;
+            } while (choixUtilisateur == "1");
 
-            } while (estVraie);
-
-        } while (estVraie);
+        } while (choixUtilisateur == "2");
+        //Environment.Exit(0);
+        Console.WriteLine("Merci au revoir");
     }
-
     private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)
     {
         bool choixVide = true;

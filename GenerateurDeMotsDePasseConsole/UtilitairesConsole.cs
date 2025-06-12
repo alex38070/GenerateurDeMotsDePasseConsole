@@ -16,6 +16,19 @@ public class UtilitairesConsole
         }
     }
 
+    public static string DemanderString() // Choix nombre non converti
+    {
+        while (true)
+        {
+            Console.Write("Veu de mot de passe : ");
+            string saisie = Console.ReadLine() ?? string.Empty;
+
+            bool estValid = (saisie != "1" || saisie != "2" || saisie != "3");
+            if (estValid)
+                return saisie;
+        }
+    }
+
     public static int NombreAleatoire(int min, int max) // Nombre aleatoire entre min et max
     {
         int nombreModuloAleatoire = Random.Shared.Next(min, max);

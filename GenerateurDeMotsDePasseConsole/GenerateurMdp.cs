@@ -10,7 +10,7 @@ internal class GenerateurMdp
     bool ajoutMajuscule = false;
     bool ajoutNombre = false;
     bool ajoutSymbole = false;
-    string choixUtilisateur;
+    string choixUtilisateur = "";
 
     public void Lancer()
     {
@@ -19,7 +19,6 @@ internal class GenerateurMdp
 
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
-
         do
         {
             ajoutMinuscule = false;
@@ -27,8 +26,6 @@ internal class GenerateurMdp
             ajoutNombre = false;
             ajoutSymbole = false;
 
-            bool estVraie = false;
-            bool nouvelleSaisie = false;
             MotDePasseAMixer.Clear();
             MotDePasseAMixer.Clear();
             int saisieNombre = UtilitairesConsole.DemanderNombre(4, 40); // Choix nombre utilisateur
@@ -71,25 +68,25 @@ internal class GenerateurMdp
         do
         {
             nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
-            Console.Write("\r\nVeuillez o/n si vous voulez des Minuscule : ");
+            Console.Write("\r\nInclure des lettres minuscules ? (o/n) : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutMinuscule = true;
                 nombreDeChoixUtilisateur++;
             }
-            Console.Write("Veuillez o/n si vous voulez des Majuscule : ");
+            Console.Write("Inclure des lettres majuscules ? (o/n) : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutMajuscule = true;
                 nombreDeChoixUtilisateur++;
             }
-            Console.Write("Veuillez o/n si vous voulez des Nombre : ");
+            Console.Write("Inclure des chiffres ? (o/n) : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutNombre = true;
                 nombreDeChoixUtilisateur++;
             }
-            Console.Write("Veuillez o/n si vous voulez des Symbole : ");
+            Console.Write("Inclure des symboles ? (o/n) : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutSymbole = true;
@@ -178,12 +175,12 @@ internal class GenerateurMdp
     private void MelangerMdp(List<string> MotDePasseAMixer)
     {
         IOrderedEnumerable<string> motDePasseMelanger = MotDePasseAMixer.OrderBy(item => Random.Shared.Next());
-
+        Console.Write("Le mot de passe généré est : ");
         foreach (string CaractereMdp in motDePasseMelanger)
         {
             Console.Write(CaractereMdp);
-            MotDePasseAMixer.Clear();
 
         }
+        MotDePasseAMixer.Clear(); // TODO : A verifier si je peut retirer!
     }
 }

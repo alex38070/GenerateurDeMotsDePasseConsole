@@ -5,11 +5,12 @@ internal class GenerateurMdp
     private List<string> MotDePasseAMixer = new List<string>();
     private Data data = new();
 
+    int nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
     bool ajoutMinuscule = false;
     bool ajoutMajuscule = false;
     bool ajoutNombre = false;
     bool ajoutSymbole = false;
-    int nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
+    string choixUtilisateur;
 
     public void Lancer()
     {
@@ -18,14 +19,18 @@ internal class GenerateurMdp
 
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
-        bool estVraie = false;
-        bool nouvelleSaisie = false;
-        string choixUtilisateur;
 
         do
         {
+            ajoutMinuscule = false;
+            ajoutMajuscule = false;
+            ajoutNombre = false;
+            ajoutSymbole = false;
+
+            bool estVraie = false;
+            bool nouvelleSaisie = false;
             MotDePasseAMixer.Clear();
-            nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
+            MotDePasseAMixer.Clear();
             int saisieNombre = UtilitairesConsole.DemanderNombre(4, 40); // Choix nombre utilisateur
             int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4); // Choix nombre aleatoire
 
@@ -65,6 +70,7 @@ internal class GenerateurMdp
         bool choixVide = true;
         do
         {
+            nombreDeChoixUtilisateur = 0; // besoin pour la methode modulo
             Console.Write("\r\nVeuillez o/n si vous voulez des Minuscule : ");
             if ((Console.ReadLine() == "o"))
             {

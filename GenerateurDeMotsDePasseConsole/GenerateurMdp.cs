@@ -45,7 +45,6 @@ internal class GenerateurMdp
                 Console.WriteLine("3. Non, quitter l'application");
 
                 Console.Write("\r\nChoix : ");
-
                 choixUtilisateur = UtilitairesConsole.DemanderString();
 
                 if (choixUtilisateur == "1")
@@ -84,7 +83,7 @@ internal class GenerateurMdp
                 ajoutNombre = true;
                 nombreDeChoixUtilisateur++;
             }
-            Console.Write("Veuillez o/n si vous voulez des Symbole : \r\n");
+            Console.Write("Veuillez o/n si vous voulez des Symbole : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutSymbole = true;
@@ -95,7 +94,7 @@ internal class GenerateurMdp
             if (nombreDeChoixUtilisateur == 0)
             {
                 choixVide = true;
-                Console.WriteLine("Veuillez faire au moins un choix : ");
+                Console.WriteLine("\r\nVeuillez faire au moins un choix : ");
             }
 
         } while (choixVide);

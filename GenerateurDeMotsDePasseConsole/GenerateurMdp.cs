@@ -18,10 +18,9 @@ internal class GenerateurMdp
 
     private void GenerateurDeMotDePasse(List<string> MotDePasseAMixer)
     {
+        bool estVraie = false;
         do
         {
-            MotDePasseAMixer.Clear();
-
             int saisieNombre = UtilitairesConsole.DemanderNombre(4, 40); // Choix nombre utilisateur
             int nombreAleatoire = UtilitairesConsole.NombreAleatoire(1, 4); // Choix nombre aleatoire
 
@@ -31,33 +30,41 @@ internal class GenerateurMdp
 
             MelangerMdp(MotDePasseAMixer);
 
-            bool estVraie = true;
-            MotDePasseAMixer.Clear();
-
-            while (estVraie)
+            do
             {
-                MotDePasseAMixer.Clear();
-                MixerList(nombreAleatoire, saisieNombre);
-                MelangerMdp(MotDePasseAMixer);
-                Console.Write("\r\nAppuyer sur 1 pour donner nouveu mot de passe réinitialiser : ");
-                string choixUtilisateur = Console.ReadLine(); // Choix nombre utilisateur
+                Console.WriteLine("\r\nSouhaitez-vous générer un nouveau mot de passe ?\r\n");
+                Console.WriteLine("1. Oui, avec les mêmes critères");
+                Console.WriteLine("2. Oui, avec de nouveaux critères");
+                Console.WriteLine("3. Autre. Non, quitter l'application");
+
+                Console.Write("\r\nChoix : ");
+                string choixUtilisateur = Console.ReadLine() ?? string.Empty; // Choix nombre utilisateur
+
                 estVraie = (choixUtilisateur == "1");
 
-                Console.WriteLine();
+                if (choixUtilisateur == "1")
+                {
+                    MotDePasseAMixer.Clear();
+                    MixerList(nombreAleatoire, saisieNombre);
+                    MelangerMdp(MotDePasseAMixer);
+                    estVraie = true;
 
-                if (choixUtilisateur != "1")
+                }
+
+                if (choixUtilisateur == "2")
                     estVraie = false;
-            }
 
-        } while (true);
+            } while (estVraie);
+
+        } while (estVraie);
     }
 
     private void ChoixTypesUtilisateur(int saisieNombre, List<string> MotDePasseAMixer, int nombreAleatoire)
     {
-        bool choixVide = false;
+        bool choixVide = true;
         do
         {
-            Console.Write("Veuillez o/n si vous voulez des Minuscule : ");
+            Console.Write("\r\nVeuillez o/n si vous voulez des Minuscule : ");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutMinuscule = true;
@@ -75,18 +82,21 @@ internal class GenerateurMdp
                 ajoutNombre = true;
                 nombreDeChoixUtilisateur++;
             }
-            Console.Write("Veuillez o/n si vous voulez des Symbole : ");
+            Console.Write("Veuillez o/n si vous voulez des Symbole : \r\n");
             if ((Console.ReadLine() == "o"))
             {
                 ajoutSymbole = true;
                 nombreDeChoixUtilisateur++;
             }
+            choixVide = false;
+
             if (nombreDeChoixUtilisateur == 0)
+            {
                 choixVide = true;
-            Console.WriteLine("\r\nVeuillez faire au moins un choix : \r\n");
+                Console.WriteLine("Veuillez faire au moins un choix : ");
+            }
 
         } while (choixVide);
-
     }
 
     public void MixerList(int nombreAleatoire, int saisieNombre)
@@ -118,7 +128,6 @@ internal class GenerateurMdp
                 IntegrerToutesLesListes(MotDePasseAMixer, ElementsAleatoires(data.Symbole, RetournerResteModulo(saisieNombre, nombreDeChoixUtilisateur)));
                 break;
         }
-
     }
 
     private int RepartirChoixUtilisateur(int nombre, int nombreDeChoixUtilisateur)
@@ -166,6 +175,8 @@ internal class GenerateurMdp
         foreach (string CaractereMdp in motDePasseMelanger)
         {
             Console.Write(CaractereMdp);
+            MotDePasseAMixer.Clear();
+
         }
     }
 }

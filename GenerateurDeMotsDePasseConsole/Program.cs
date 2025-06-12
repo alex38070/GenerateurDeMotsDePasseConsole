@@ -23,13 +23,7 @@ public class Program
 {
     static void Main(string[] args)
     {
-        do
-        {
-            GenerateurMdp generateurMdp = new GenerateurMdp();
-            generateurMdp.Lancer();
-            Console.WriteLine(" ");
-            Console.Write("\r\nAppuyer sur 1 pour générer un nouveau mot de passe : ");
-
-        } while (Console.ReadLine() == "1");
+        GenerateurMdp generateurMdp = new GenerateurMdp();
+        generateurMdp.Lancer();
     }
 }
